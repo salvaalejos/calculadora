@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.swing.ImageIcon;
+import net.objecthunter.exp4j.Expression;
+import net.objecthunter.exp4j.ExpressionBuilder;
 
 /**
  *
@@ -461,28 +463,59 @@ public class CalculadoraGUI extends javax.swing.JFrame {
         btnIgualActionPerformed(evt);
     }//GEN-LAST:event_btnRaizActionPerformed
 
+    private void igualAction(){
+        String operacion = lblOperacion.getText();
+        Expression expression = new ExpressionBuilder(operacion).build();
+        Double resultado = expression.evaluate();
+        lblOperacion.setText(resultado.toString());
+    }
+
+    private void delete(){
+        String texto = lblOperacion.getText();
+        if (texto != null && texto.length() > 0) {
+            // Elimina la última letra
+            texto = texto.substring(0, texto.length() - 1);
+        }
+        lblOperacion.setText(texto);
+    }
+
+    private void cuadrado(){
+        String numeros = lblOperacion.getText();
+        try {
+            Double numero = Double.parseDouble(numeros);
+            Double numeroCuadrado = Math.pow(numero, 2);
+            lblOperacion.setText(numeroCuadrado.toString());
+        } catch (NumberFormatException e) {
+            lblOperacion.setText("");
+        }
+    }
+
+    private void raiz(){
+        String numeros = lblOperacion.getText();
+        try{
+            Double numero = Double.parseDouble(numeros);
+            Double numeroRaiz = Math.sqrt(numero);
+            lblOperacion.setText(numeroRaiz.toString());
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void btnIgualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIgualActionPerformed
         // TODO add your handling code here:
 
 
         if (evt.getSource() == btnIgual) {
-            System.out.println("La operacion a realizar; "+lblOperacion.getText());
+            igualAction();
         }
-
         if (evt.getSource() == btnClear) {
             lblOperacion.setText("");
         } else if (evt.getSource() == btnDelete){
-            String texto = lblOperacion.getText();
-            if (texto != null && texto.length() > 0) {
-                // Elimina la última letra
-                texto = texto.substring(0, texto.length() - 1);
-            }
-            lblOperacion.setText(texto);
+            delete();
         } else if (evt.getSource() == btn0){
             if (lblOperacion.getText() != "0") {
                 lblOperacion.setText(lblOperacion.getText()+"0");
             }
-            
         } else if (evt.getSource() == btn1){
             lblOperacion.setText(lblOperacion.getText()+"1");
         } else if (evt.getSource() == btn2){
@@ -510,15 +543,11 @@ public class CalculadoraGUI extends javax.swing.JFrame {
         } else if (evt.getSource() == btnDivision){
             lblOperacion.setText(lblOperacion.getText()+" / ");
         } else if(evt.getSource() == btnCuadrado){
-            String numeros = lblOperacion.getText();
-            try {
-                int numero = Integer.parseInt(numeros);
-                Double numeroCuadrado = Math.pow(numero, 2);
-                lblOperacion.setText(numero+"² = "+numeroCuadrado);
-            } catch (NumberFormatException e) {
-                lblOperacion.setText("");
-            }
-
+            igualAction();
+            cuadrado();
+        } else if (evt.getSource() == btnRaiz) {
+            igualAction();
+            raiz();
         } else if (evt.getSource() == btnResta) {
             lblOperacion.setText(lblOperacion.getText()+" - ");
         }

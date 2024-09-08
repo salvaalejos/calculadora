@@ -11,5 +11,12 @@
         <maven.compiler.target>19</maven.compiler.target>
         <exec.mainClass>com.mycompany.calculadora.Calculadora</exec.mainClass>
     </properties>
+    <dependencies>
+        <dependency>
+            <groupId>net.objecthunter</groupId>
+            <artifactId>exp4j</artifactId>
+            <version>0.4.8</version>
+        </dependency>
+    </dependencies>
 
 </project>
